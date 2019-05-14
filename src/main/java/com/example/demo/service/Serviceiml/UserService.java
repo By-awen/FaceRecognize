@@ -9,6 +9,7 @@ import com.example.demo.util.SolvePicture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,19 +27,26 @@ public class UserService implements com.example.demo.service.UserService {
 
 
     @Override
-    public boolean loginByFace()  {//最主要的实现点
-//        List<User>users = userRepositroy.findAll();
-//        try {
-//            SolvePicture.getPicture();
-//            String img2 = "E:\\image\\test.jpg";
-//            for(User user :users){
-//                Sample.sample(user.getFace(),img2);
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-        SolvePicture.getPicture();
-        return true;
+    public boolean loginByFace(String name)  {//最主要的实现点
+        boolean flag = false;
+        name = "E://下载//" + name;//传过来的是完全文件名称，不需要在加上.jpg了
+        List<User>users = userRepositroy.findAll();
+        try{
+            for(User user:users){
+                if(Sample.sample(user.getFace(),name) >= 75){//如果分数大于了75说明相似度是很高的
+                    flag = true;
+                    break;
+                }
+//                if(name == name)flag = true;//这个判断条件纯属扯淡，应该是sample对象的相似度大于多少会返回成功。
+
+
+            }
+            //SolvePicture.deletePicture(name);//删除文件防止占用空间
+        }catch (Exception e){
+            e.printStackTrace();
+            flag = false;
+        }
+        return flag;
     }
 
     @Override

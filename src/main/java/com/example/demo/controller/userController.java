@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /*
@@ -44,10 +45,17 @@ public class userController {
 //        return "failed";
 //    }
     @RequestMapping(value = {"/loginByFace"},method = RequestMethod.GET)
-    public String loginByFace(){
-        if(userService.loginByFace()){
+    public ModelAndView loginByFace(){
+        ModelAndView modelAndView = new ModelAndView("test3.html");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/loginByFace2"},method = RequestMethod.GET)
+    public String loginByFace2(String name){
+        if(userService.loginByFace(name)){
             return "Success";
         }
         return "failed";
+
     }
 }

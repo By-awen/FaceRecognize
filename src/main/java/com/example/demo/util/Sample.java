@@ -21,26 +21,16 @@ public class Sample {
     private static String proxy_host = "localhost";
     private static int proxy_port = 8090;
 
+    public static void main(String[] args) {
+        try{
+            sample("E://image//test.jpg","E://下载//1557835952298.jpg");
+            testFace("E://image//test.jpg");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-//    public static void main(String[] args) throws IOException {
-//        // 初始化一个AipFace
-//        AipFace client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
-//        // 可选：设置网络连接参数
-//        client.setConnectionTimeoutInMillis(2000);
-//        client.setSocketTimeoutInMillis(60000);
-//
-//        // 可选：设置代理服务器地址, http和socket二选一，或者均不设置
-//        //client.setHttpProxy("proxy_host", proxy_port);  // 设置http代理
-//        //client.setSocketProxy("proxy_host", proxy_port);  // 设置socket代理
-//
-//        // 可选：设置log4j日志输出格式，若不设置，则使用默认配置
-//        // 也可以直接通过jvm启动参数设置此环境变量
-//        System.setProperty("aip.log4j.conf", "path/to/your/log4j.properties");
-////        // 调用接口
-//        testFace();
-//        sample();
-//    }
-    public static void testFace()throws IOException{
+    public static void testFace(String pic)throws IOException{
         AipFace client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
         // 可选：设置网络连接参数
         client.setConnectionTimeoutInMillis(2000);
@@ -51,26 +41,24 @@ public class Sample {
         options.put("max_face_num", "2");
         options.put("face_type", "LIVE");
         String imageType = "BASE64";
-        String pic = SolvePicture.getPicture();
         String image = Base64Util. encode(Util.readFileByBytes(pic));
 
         // 人脸检测
         JSONObject res = client.detect(image,imageType,options);
         System.out.println(res.toString(2));
-        JOptionPane.showMessageDialog(null, res.toString());
+        JSONObject jsonObject = (JSONObject)res.get("result");
+        JOptionPane.showMessageDialog(null, jsonObject.toString(5));
     }
-    public static void sample(String img1,String img2)throws IOException {
+    public static Double sample(String img1,String img2)throws IOException {
         AipFace client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
         // 可选：设置网络连接参数
         client.setConnectionTimeoutInMillis(2000);
         client.setSocketTimeoutInMillis(60000);
-        String image1 = Base64Util.encode(Util.readFileByBytes("E:\\image\\test.jpg"));
-        String image2 = Base64Util.encode(Util.readFileByBytes("E:\\image\\test2.jpg"));
 
         // image1/image2也可以为url或facetoken, 相应的imageType参数需要与之对应。
         //传过来的是路径需要转化程图片
         img1 = Base64Util.encode(Util.readFileByBytes(img1));
-        img2= Base64Util.encode(Util.readFileByBytes(image2));
+        img2 = Base64Util.encode(Util.readFileByBytes(img2));
         MatchRequest req1 = new MatchRequest(img1, "BASE64");
         MatchRequest req2 = new MatchRequest(img2, "BASE64");
         ArrayList<MatchRequest> requests = new ArrayList<MatchRequest>();
@@ -79,6 +67,9 @@ public class Sample {
 
         JSONObject res = client.match(requests);
         System.out.println(res.toString(2));
+        JSONObject jsonObject = (JSONObject) res.get("result");
+        System.out.println(jsonObject.getDouble("score"));
+        return jsonObject.getDouble("score");
     }
 
 }

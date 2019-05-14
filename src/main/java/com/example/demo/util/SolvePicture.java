@@ -34,6 +34,7 @@ public class SolvePicture {
         panel.setImageSizeDisplayed(true);
         panel.setMirrored(true);
 
+
         JFrame window = new JFrame("Test webcam panel");
         window.add(panel);
         window.setResizable(true);
@@ -67,9 +68,8 @@ public class SolvePicture {
         return fileName;
     }
 
-    public static boolean deletePicture(){
-        System.out.println(fileName + ".jpg");
-        File file = new File(fileName + "jpg");
+    public static boolean deletePicture(String name){
+        File file = new File(name);
         if(file.exists()){
             file.delete();
             System.out.println("文件删除成功");
@@ -81,8 +81,7 @@ public class SolvePicture {
         }
     }
 
-//    public static void main(String[] args) {
-//        System.out.println(getPicture());
-//        //deletePicture();
-//    }
+    public static void main(String[] args) {
+        System.out.println(getPicture());
+    }
 }
