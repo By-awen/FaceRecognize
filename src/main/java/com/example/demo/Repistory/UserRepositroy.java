@@ -3,20 +3,18 @@ package com.example.demo.Repistory;
 import com.example.demo.pojo.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /*
 * 进行登陆的验证
 * 进行增删查改
-* */
-@Repository
+//* */
 public interface UserRepositroy extends JpaRepository<User,Integer> {
     User findUserByFace(String image);//通过脸的信息来查找
     User findUserByNameAndPassword(String username,String password);//通过姓名和密码进行查找，不设置存错过程一样简单，只不过花费有点大
-    List<User> findAllByRole(String Role);//查找所有的管理员，可以显示联系方式。
-    User findByName(String name);
+ //   List<User> findAllByRole(String Role);//查找所有的管理员，可以显示联系方式。
+   User findByName(String name);
 
 
     void deleteByNameAndPassword(String username,String password);//用户可以通过姓名和密码来注销

@@ -68,6 +68,9 @@ public class Sample {
         String image2 = Base64Util.encode(Util.readFileByBytes("E:\\image\\test2.jpg"));
 
         // image1/image2也可以为url或facetoken, 相应的imageType参数需要与之对应。
+        //传过来的是路径需要转化程图片
+        img1 = Base64Util.encode(Util.readFileByBytes(img1));
+        img2= Base64Util.encode(Util.readFileByBytes(image2));
         MatchRequest req1 = new MatchRequest(img1, "BASE64");
         MatchRequest req2 = new MatchRequest(img2, "BASE64");
         ArrayList<MatchRequest> requests = new ArrayList<MatchRequest>();

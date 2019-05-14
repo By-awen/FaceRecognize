@@ -17,7 +17,7 @@ import java.util.List;
 *
 * 控制层应该是使用dto接收数据，但是数据比较少，没必要了就。
 *
-* */
+//* */
 @Service
 @Slf4j
 public class UserService implements com.example.demo.service.UserService {
@@ -27,16 +27,17 @@ public class UserService implements com.example.demo.service.UserService {
 
     @Override
     public boolean loginByFace()  {//最主要的实现点
-        List<User>users = userRepositroy.findAll();
-        try {
-            SolvePicture.getPicture();
-            String img2 = Base64Util.encode(Util.readFileByBytes("E:\\image\\test.jpg"));
-            for(User user :users){
-                Sample.sample(user.getFace(),img2);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        List<User>users = userRepositroy.findAll();
+//        try {
+//            SolvePicture.getPicture();
+//            String img2 = "E:\\image\\test.jpg";
+//            for(User user :users){
+//                Sample.sample(user.getFace(),img2);
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+        SolvePicture.getPicture();
         return true;
     }
 
@@ -57,7 +58,7 @@ public class UserService implements com.example.demo.service.UserService {
         }
     }
 
-    @Override
+  //  @Override
     public boolean deleteByName(String name) {//在controller层进行处理是否为管理员
         User  user = userRepositroy.findByName(name);
         if(user != null){
@@ -67,17 +68,17 @@ public class UserService implements com.example.demo.service.UserService {
         else return false;
     }
 
-    @Override
-    public List<User> findAllRole(String role) {
-        return userRepositroy.findAllByRole(role);
-    }
+//    @Override
+//    public List<User> findAllRole(String role) {
+//        return userRepositroy.findAllByRole(role);
+//    }
 
-    @Override
+ //   @Override
     public User findByName(String name) {//如果是空的应该抛出报错
         return userRepositroy.findByName(name);
     }
 
-    @Override
+   // @Override
     public boolean Register(User user) {//注册出错只有一种可能，那就是传过来的数据是空的,或者数据不符合范围
         if(user != null){
             userRepositroy.save(user);//不使用dto层传输，原因就是数据不是很多。
@@ -86,7 +87,7 @@ public class UserService implements com.example.demo.service.UserService {
         return false;
     }
 
-    @Override
+    //@Override
     public boolean Update(int id,User newU) {//先删除用户，后更新用户，用户的id仍旧不变
         if(deleteByName(userRepositroy.findById(id).get().getName())){
             newU.setId(id);
@@ -96,7 +97,7 @@ public class UserService implements com.example.demo.service.UserService {
         return true;
     }
 
-    @Override
+    //@Override
     public boolean RegistrrOut(String name,String password,String face) {//注销
         User user = userRepositroy.findUserByNameAndPassword(name,password);
         if(user.getFace().equals(face)){
@@ -107,7 +108,7 @@ public class UserService implements com.example.demo.service.UserService {
     }
 
 
-    @Override
+    //@Override
     public String findRole(String name) {
         return findByName(name).getRole();
     }//从这里查找用来判断是否有权限

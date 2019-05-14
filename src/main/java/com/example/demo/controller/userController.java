@@ -17,10 +17,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 *
 * */
 //
-//@Api
-//@EnableSwagger2
-//@RestController
-//@RequestMapping(value = {"/user"})
+@Api
+@EnableSwagger2
+@RestController
+@RequestMapping(value = {"/user"})
 public class userController {
 
     User user = new User();//进行缓存，学习了Redis可以进行改进
@@ -36,14 +36,14 @@ public class userController {
         }
         return "failed";
     }
-    @RequestMapping(value = {"/update"},method = RequestMethod.GET)
-    public String Update(User user){//只能通过每次的验证，因为没有缓存,如果缓存了信息，就不用每次都重新
-        if(userService.Update(user.getId(),user)){
-            return "Success";
-        }
-        return "failed";
-    }
-    @RequestMapping(value = {"/update"},method = RequestMethod.GET)
+//    @RequestMapping(value = {"/update"},method = RequestMethod.GET)
+//    public String Update(User user){//只能通过每次的验证，因为没有缓存,如果缓存了信息，就不用每次都重新
+//        if(userService.Update(user.getId(),user)){
+//            return "Success";
+//        }
+//        return "failed";
+//    }
+    @RequestMapping(value = {"/loginByFace"},method = RequestMethod.GET)
     public String loginByFace(){
         if(userService.loginByFace()){
             return "Success";
